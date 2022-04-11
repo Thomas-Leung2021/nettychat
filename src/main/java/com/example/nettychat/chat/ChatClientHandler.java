@@ -11,4 +11,9 @@ public class ChatClientHandler extends SimpleChannelInboundHandler<String> {
         System.out.println(msg);
     }
 
+    @Override
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("[Client] - " + ctx.channel().remoteAddress() + " is disconnected by server!");
+        System.exit(0);
+    }
 }

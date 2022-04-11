@@ -18,7 +18,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
             channel.writeAndFlush("[SERVER] - " + incoming.remoteAddress() + " joined\n");
         }
         channels.add(ctx.channel());
-
+        System.out.println("[SERVER] - " + incoming.remoteAddress() + " joined");
     }
 
     @Override
@@ -28,6 +28,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
             channel.writeAndFlush("[SERVER] - " + incoming.remoteAddress() + " has left!\n");
         }
         channels.remove(ctx.channel());
+        System.out.println("[SERVER] - " + incoming.remoteAddress() + " has left!");
     }
 
     @Override
@@ -40,9 +41,10 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
                 channel.writeAndFlush("[" + incoming.remoteAddress() + "] " + msg + "\n");
             }
         }
+        incoming.disconnect(); // server disconnect client connection after receiving one message from client
         // channels.writeAndFlush("[" + incoming.remoteAddress() + "]" + msg + "\n",
         // ChannelMatcher);
-        System.out.println(msg);
+        System.out.println("[" + incoming.remoteAddress() + "] " + msg + "\n");
     }
 
 }
